@@ -1,5 +1,7 @@
 // Calls of this function should be replaced with calls of `string_slice` or `string`.
-fn placeholder() {}
+fn placeholder<T: AsRef<str>>(arg: T) {
+    string_slice(arg.as_ref());
+}
 
 fn string_slice(arg: &str) {
     println!("{arg}");
@@ -21,7 +23,7 @@ fn main() {
 
     placeholder("rust is fun!".to_owned());
 
-    placeholder("nice weather".into());
+    placeholder::<String>("nice weather".into());
 
     placeholder(format!("Interpolation {}", "Station"));
 

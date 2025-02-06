@@ -1,35 +1,45 @@
 #[derive(Debug, PartialEq, Eq)]
 enum DivisionError {
-    // Example: 42 / 0
     DivideByZero,
-    // Only case for `i64`: `i64::MIN / -1` because the result is `i64::MAX + 1`
     IntegerOverflow,
-    // Example: 5 / 2 = 2.5
     NotDivisible,
 }
 
-// TODO: Calculate `a` divided by `b` if `a` is evenly divisible by `b`.
-// Otherwise, return a suitable error.
+// Function to calculate a / b
 fn divide(a: i64, b: i64) -> Result<i64, DivisionError> {
-    todo!();
+    if b == 0 {
+        return Err(DivisionError::DivideByZero);
+    }
+    
+    if a == i64::MIN && b == -1 {
+        return Err(DivisionError::IntegerOverflow);
+    }
+    
+    if a % b != 0 {
+        return Err(DivisionError::NotDivisible);
+    }
+    
+    Ok(a / b)
 }
 
-// TODO: Add the correct return type and complete the function body.
-// Desired output: `Ok([1, 11, 1426, 3])`
-fn result_with_list() {
+// Function to return the results in a list
+fn result_with_list() -> Result<Vec<i64>, DivisionError> {
     let numbers = [27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+    let division_results = numbers.into_iter().map(|n| divide(n, 27));  // No need to dereference `n`
+    
+    division_results.collect()  // Collect the results into a vector
 }
 
-// TODO: Add the correct return type and complete the function body.
-// Desired output: `[Ok(1), Ok(11), Ok(1426), Ok(3)]`
-fn list_of_results() {
+// Function to return the list of results in Result form
+fn list_of_results() -> Vec<Result<i64, DivisionError>> {
     let numbers = [27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+    let division_results = numbers.into_iter().map(|n| divide(n, 27));  // No need to dereference `n`
+    
+    division_results.collect()  // Collect the results as a Vec<Result>
 }
 
 fn main() {
-    // You can optionally experiment here.
+    // Optionally, you can experiment here.
 }
 
 #[cfg(test)]

@@ -4,11 +4,11 @@
 // the signatures for now.
 
 fn is_even(num: i64) -> bool {
-    num % 2 == 0
+    num & 1 == 0
 }
 
 // TODO: Fix the function signature.
-fn sale_price(price: i64) -> {
+fn sale_price(price: i64) -> i64{
     if is_even(price) {
         price - 10
     } else {

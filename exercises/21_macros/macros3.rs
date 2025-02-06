@@ -1,6 +1,6 @@
-// TODO: Fix the compiler error without taking the macro definition out of this
-// module.
 mod macros {
+    // Define the macro inside the `macros` module
+    #[macro_export]
     macro_rules! my_macro {
         () => {
             println!("Check out my macro!");
@@ -9,5 +9,6 @@ mod macros {
 }
 
 fn main() {
+    // Use the macro from the `macros` module
     my_macro!();
 }

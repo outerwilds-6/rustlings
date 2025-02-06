@@ -1,7 +1,4 @@
-// The `From` trait is used for value-to-value conversions. If `From` is
-// implemented, an implementation of `Into` is automatically provided.
-// You can read more about it in the documentation:
-// https://doc.rust-lang.org/std/convert/trait.From.html
+use std::str::FromStr;
 
 #[derive(Debug)]
 struct Person {
@@ -9,8 +6,6 @@ struct Person {
     age: u8,
 }
 
-// We implement the Default trait to use it as a fallback when the provided
-// string is not convertible into a `Person` object.
 impl Default for Person {
     fn default() -> Self {
         Self {
@@ -20,21 +15,29 @@ impl Default for Person {
     }
 }
 
-// TODO: Complete this `From` implementation to be able to parse a `Person`
-// out of a string in the form of "Mark,20".
-// Note that you'll need to parse the age component into a `u8` with something
-// like `"4".parse::<u8>()`.
-//
-// Steps:
-// 1. Split the given string on the commas present in it.
-// 2. If the split operation returns less or more than 2 elements, return the
-//    default of `Person`.
-// 3. Use the first element from the split operation as the name.
-// 4. If the name is empty, return the default of `Person`.
-// 5. Parse the second element from the split operation into a `u8` as the age.
-// 6. If parsing the age fails, return the default of `Person`.
 impl From<&str> for Person {
-    fn from(s: &str) -> Self {}
+    fn from(s: &str) -> Self {
+        let parts: Vec<&str> = s.split(',').collect();
+        
+        // If there aren't exactly two parts, return the default value
+        if parts.len() != 2 {
+            return Person::default();
+        }
+
+        // Get the name and parse the age
+        let name = parts[0].trim().to_string();
+        let age_result = parts[1].trim().parse::<u8>();
+
+        // If name is empty or parsing the age fails, return the default value
+        if name.is_empty() || age_result.is_err() {
+            return Person::default();
+        }
+
+        Person {
+            name,
+            age: age_result.unwrap(),
+        }
+    }
 }
 
 fn main() {

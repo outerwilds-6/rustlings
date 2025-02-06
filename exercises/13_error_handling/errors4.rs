@@ -9,8 +9,13 @@ struct PositiveNonzeroInteger(u64);
 
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<Self, CreationError> {
-        // TODO: This function shouldn't always return an `Ok`.
-        Ok(Self(value as u64))
+        if value < 0 {
+            Err(CreationError::Negative)  // 如果值小于0，返回 Negative 错误
+        } else if value == 0 {
+            Err(CreationError::Zero)  // 如果值等于0，返回 Zero 错误
+        } else {
+            Ok(Self(value as u64))  // 否则返回 Ok，并将值转换为 u64
+        }
     }
 }
 

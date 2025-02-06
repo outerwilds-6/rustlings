@@ -1,9 +1,15 @@
+// Define the AppendBar trait with one method that appends "Bar" to a vector of strings.
 trait AppendBar {
     fn append_bar(self) -> Self;
 }
 
-// TODO: Implement the trait `AppendBar` for a vector of strings.
-// `append_bar` should push the string "Bar" into the vector.
+// Implement the AppendBar trait for Vec<String>.
+impl AppendBar for Vec<String> {
+    fn append_bar(mut self) -> Self {
+        self.push("Bar".to_string());  // Append "Bar" to the vector
+        self  // Return the modified vector
+    }
+}
 
 fn main() {
     // You can optionally experiment here.
